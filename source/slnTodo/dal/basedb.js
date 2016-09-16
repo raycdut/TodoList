@@ -1,17 +1,21 @@
-var mongodb = require('mongodb');
+var mongoose = require('mongoose');
 
-var MongoClient = mongodb.MongoClient;
-
-var url = 'mongodb://localhost:10000/todosdb';
-
-MongoClient.connect(url, function(err, db) {
-    if (err) {
-        console.log('unable to connect to the mongdoDB server. error:', err)
-    } else {
-        console.log('Connection established to', url);
-        db.close();
-    }
+var url = "mongodb://localhost:10000/todosdb";
+mongoose.connect(url);
+var TodoUser = mongoose.model('TodoUser', {
+    name: String,
+    roles: Array,
+    age: Number
 });
 
+var user1 = new TodoUser({
+    name: 'test1',
+    roles: ['admin', 'normal user'],
+    age: 30
+})
 
-module.exports = MongoClient;
+
+console.log(user1);
+
+user1.save();
+//console.log(d);
